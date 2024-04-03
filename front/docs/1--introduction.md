@@ -8,15 +8,15 @@ Material de apoio: [Planejando Componentes Front-end: com Atomic Design (Vídeo)
 
 ## Estrutura de diretórios
 
-  
-> _>assets_
-  _>components_
-  _>consumables // tem utilidade apenas em desenvolvimento._
-  _>docs_
-  _>scripts_ 
-  _>styles_
-  arquivos.html
- 
+```  
+_>assets_
+_>components_
+_>consumables // tem utilidade apenas em desenvolvimento._
+_>docs_
+_>scripts_ 
+_>styles_
+arquivos.html
+``` 
  
 - **Assets**: Arquivos de mídia do projeto -- imagens, ícones, vídeos, músicas e etc.
 - **Components**: Códigos em javascript que exportam objetos/componentes Vue.js
