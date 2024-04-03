@@ -1,0 +1,16 @@
+{
+    "patients": [
+        {
+            "id": 1,
+            "name":"Fulano D. Tal",
+            "email":"fulanoTal@gmail.com",
+            "phone":"21 9999-9999"
+        },
+        {
+            "id": 2,
+            "name":"Ciclano D. Tal",
+            "email":"ciclano4244@hotmail.com",
+            "phone":"21 9999-9998"
+        }
+    ]
+}
