@@ -1,0 +1,14 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email":"fulanoTal@gmail.com",
+            "password":"senha123"
+        },
+        {
+            "id": 2,
+            "email":"ciclano4244@hotmail.com",
+            "password":"123senha"
+        }
+    ]
+}
