@@ -9,10 +9,12 @@ def homepage(request):
     return render(request, 'core/index.html')
 
 
-class login(APIView)
+class login(APIView):
 
     def post(self, request):
-        
+        pass
+
+
 def login(request):
     if request.method == 'POST':
         user = authenticate(username=request.get('username'), password=request.get('password'))
