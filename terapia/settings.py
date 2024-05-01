@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'terapia',
+    'terapia.core',
 )
 
 SITE_ID = 1
