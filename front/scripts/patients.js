@@ -25,4 +25,5 @@ const APP = Vue.createApp({
 });
 
 APP.component(HEADER.nametag, HEADER)
+
 APP.mount('#app')
