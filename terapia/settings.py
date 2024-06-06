@@ -35,15 +35,15 @@ INSTALLED_APPS = (
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
+    "django.contrib.sites",
     "drf_redesign",
     "drf_material",
     "rest_framework",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "django_extensions",
-    'terapia.core',
+    "terapia.core",
 
 )
 
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'allauth.account.middleware.AccountMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 
 ]
 
@@ -92,8 +92,8 @@ DATABASES = {
 }
 
 AUTHENTICATION_BACKENDS = {
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 }
 
 # Password validation

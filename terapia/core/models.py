@@ -49,7 +49,7 @@ class Profile(models.Model):
     contatos = models.ForeignKey("Contatos", on_delete=models.CASCADE, null=True)
 
     tipo = models.CharField("Tipo", max_length=100, choices=TIPOS_CHOICES)
-    foto = models.ImageField(upload_to='profile_pics', null=True, blank=True)
+    foto = models.ImageField(upload_to="profile_pics", null=True, blank=True)
 
     def __str__(self):
         return self.user.username
