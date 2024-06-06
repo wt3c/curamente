@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Profile, Sessao, Contatos
+
+admin.site.register(Profile)
+admin.site.register(Sessao)
+admin.site.register(Contatos)
