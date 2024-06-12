@@ -36,7 +36,7 @@ class SessoaSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(allow_null=True, required=False)
     contatos = ContatosSerializer()
     sessao = SessoaSerializer(many=True)
 
@@ -64,3 +64,36 @@ class ProfileSerializer(serializers.ModelSerializer):
             profile.sessao.add(sessao_id)
 
         return profile
+
+    def update(self, instance, validated_data):
+        """
+            Update and return an existing `Profile` instance, given the validated data.
+        """
+
+        # ## Update user
+        fields_user = validated_data.pop("usuario")
+        instance.user.first_name = fields_user.get("first_name")
+        instance.user.last_name = fields_user.get("last_name")
+        instance.user.save()
+
+        # ## Update Profile
+        instance.tipo = validated_data.get("tipo")
+        instance.foto = validated_data.get("foto")
+
+        # ## Update Contatos
+        instance.contatos.telefone = validated_data.get("contatos").get("telefone")
+        instance.contatos.email = validated_data.get("contatos").get("email")
+        instance.contatos.save()
+
+        instance.sessao.clear()
+        for sessao in validated_data.get("sessao"):
+            updated, created = Sessao.objects.update_or_create(
+                horario=sessao.get("horario"),
+                defaults={**sessao}
+            )
+
+            instance.sessao.add(updated)
+
+        instance.save()
+
+        return instance

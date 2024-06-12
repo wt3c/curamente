@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from rest_framework import status
+from rest_framework import generics
 from rest_framework.views import APIView
 
 from rest_framework.response import Response
@@ -35,3 +36,23 @@ class ProfileView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, format=None):
+        # profile = Profile.objects.get(user__username=request.data.get("username"))
+        profile = Profile.objects.get(pk=10)
+        usuario = request.data.pop("user")
+
+        serializer = ProfileSerializer(profile, data=request.data)
+
+        if serializer.is_valid():            
+            serializer.save(usuario=usuario)
+            return Response(serializer.data)
+        print(serializer.errors)
+        return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileListView(generics.RetrieveUpdateDestroyAPIView):
+    # serializer_class = MusicianSerializer
+    # queryset = Musician.objects.all()
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
