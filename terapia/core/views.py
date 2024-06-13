@@ -21,7 +21,7 @@ class Login(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
-class ProfileView(APIView):
+class TerapeutaView(APIView):
     def get(self, request, format=None):
         profile = Profile.objects.get(user__username=request.data.get("username"))
         terapeuta = profile.pacientes.all()
@@ -30,17 +30,26 @@ class ProfileView(APIView):
 
     def post(self, request, format=None):
         serializer = ProfileSerializer(data=request.data)
+        # PK_TERAPEUTA = 1
+        # list_pacienete = [id_2, id_5]        
+
+        # tera = Profile.objects.get(pk=PK_TERAPEUTA)
+        # 
+        # for paciente in List_pacienete:
+        #     user = User.objects.get(pk=paciente)
+        #     tera.pacientes.add(user)     
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
- 
-         
+
+    def put(self, request, format=None):
+        pass
 
 
-class ProfileViewDetail(APIView):
+class PacienteView(APIView):
     def get(self, request, pk, format=None):
         profile = Profile.objects.get(pk=pk)
         serializer = ProfileSerializer(profile)
