@@ -48,7 +48,7 @@ class Profile(models.Model):
     pacientes = models.ManyToManyField("Profile", null=True, blank=True)
     contatos = models.ForeignKey("Contatos", on_delete=models.CASCADE, null=True)
 
-    tipo = models.CharField("Tipo", max_length=100, choices=TIPOS_CHOICES)
+    tipo = models.CharField("Tipo", max_length=50, choices=TIPOS_CHOICES)
     foto = models.ImageField(upload_to="profile_pics", null=True, blank=True)
 
     def __str__(self):

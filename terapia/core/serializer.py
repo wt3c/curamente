@@ -38,11 +38,11 @@ class SessoaSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(allow_null=True, required=False)
     contatos = ContatosSerializer()
-    sessao = SessoaSerializer(many=True)
+    sessao = SessoaSerializer(many=True, allow_null=True, required=False)
 
     class Meta:
         model = Profile
-        fields = ["user", "tipo", "foto", "contatos", "sessao"]
+        fields = ["id", "user", "tipo", "foto", "contatos", "sessao"]
 
     def create(self, validated_data):
         fields_user = validated_data.get("user")
@@ -85,10 +85,11 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.contatos.email = validated_data.get("contatos").get("email")
         instance.contatos.save()
 
-        instance.sessao.clear()
+        # ## Update Sessão 
+        # instance.sessao.clear()
         for sessao in validated_data.get("sessao"):
             updated, created = Sessao.objects.update_or_create(
-                horario=sessao.get("horario"),
+                id=sessao.get("id"),
                 defaults={**sessao}
             )
 
