@@ -35,14 +35,29 @@ class SessoaSerializer(serializers.ModelSerializer):
         depth = 1
 
 
+class PacienteSerializer(serializers.Serializer):
+    user = UserSerializer(read_only=True)
+    contatos = ContatosSerializer(read_only=True)
+    sessao = SessoaSerializer(many=True, read_only=True)
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(allow_null=True, required=False)
     contatos = ContatosSerializer()
     sessao = SessoaSerializer(many=True, allow_null=True, required=False)
+    # paciente = PacienteSerializer(many=True, read_only=True)
 
     class Meta:
         model = Profile
-        fields = ["id", "user", "tipo", "foto", "contatos", "sessao"]
+        fields = ["id", "user", "tipo", "pacientes", "foto", "contatos", "sessao"]
+
+        def get_pacientes(self, obj):
+            if obj.pacientes is not None:
+                return ProfileSerializer(obj.pacientes).data
+            else:
+                return None
+
+        depth = 2
 
     def create(self, validated_data):
         fields_user = validated_data.get("user")
