@@ -45,6 +45,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(allow_null=True, required=False)
     contatos = ContatosSerializer()
     sessao = SessoaSerializer(many=True, allow_null=True, required=False)
+
     # paciente = PacienteSerializer(many=True, read_only=True)
 
     class Meta:
@@ -70,13 +71,22 @@ class ProfileSerializer(serializers.ModelSerializer):
         contatos = Contatos.objects.create(**contatos_data)
         validated_data["contatos"] = contatos
 
+        pacientes_list = validated_data.pop("pacientes")
+
         sessao_list = validated_data.pop("sessao")
 
         profile = Profile.objects.create(user=user, **validated_data)
 
+        # ## Sessão
         for sessao in sessao_list:
             sessao_id = Sessao.objects.create(**sessao)
             profile.sessao.add(sessao_id)
+
+        # ## Pacientes
+        if pacientes_list:
+            for paciente_data in pacientes_list:
+                paciente = Profile.objects.get(pk=paciente_data.get("id"))
+                profile.pacientes.add(paciente)
 
         return profile
 
@@ -109,6 +119,14 @@ class ProfileSerializer(serializers.ModelSerializer):
             )
 
             instance.sessao.add(updated)
+
+        pacientes_list = validated_data.pop("pacientes")
+    
+        # ## Pacientes
+        if pacientes_list:
+            for paciente_data in pacientes_list:
+                paciente = Profile.objects.get(pk=paciente_data.get("id"))
+                instance.pacientes.add(paciente)
 
         instance.save()
 

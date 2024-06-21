@@ -21,7 +21,7 @@ class Login(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
-class TerapeutaView(APIView):
+class UsuarioView(APIView):
     def get(self, request, format=None):
         profile = Profile.objects.get(user__username=request.data.get("username"))
         terapeuta = profile.pacientes.all()
@@ -30,17 +30,11 @@ class TerapeutaView(APIView):
 
     def post(self, request, format=None):
         serializer = ProfileSerializer(data=request.data)
-        # PK_TERAPEUTA = 1
-        # list_pacienete = [id_2, id_5]        
 
-        # tera = Profile.objects.get(pk=PK_TERAPEUTA)
-        # 
-        # for paciente in List_pacienete:
-        #     user = User.objects.get(pk=paciente)
-        #     tera.pacientes.add(user)     
+        pacientes = request.data.pop("pacientes")
 
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(pacientes=pacientes)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -49,11 +43,20 @@ class TerapeutaView(APIView):
         pass
 
 
-class PacienteView(APIView):
+class UsuarioDetail(APIView):
     def get(self, request, pk, format=None):
         profile = Profile.objects.get(pk=pk)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = ProfileSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         profile = Profile.objects.get(pk=pk)
@@ -64,10 +67,11 @@ class PacienteView(APIView):
         profile = Profile.objects.get(pk=pk)
         usuario = request.data.pop("user")
         sessao = request.data.pop("sessao")
+        pacientes = request.data.pop("pacientes")
 
         serializer = ProfileSerializer(profile, data=request.data)
 
         if serializer.is_valid():
-            serializer.save(usuario=usuario, sessao=sessao)
+            serializer.save(usuario=usuario, sessao=sessao, pacientes=pacientes)
             return Response(serializer.data)
         return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
