@@ -41,7 +41,8 @@ share/
 etc/
 var/
 wheels/
-share/python-wheels/
+share/
+etc/
 *.egg-info/
 .installed.cfg
 *.egg
