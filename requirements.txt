@@ -5,6 +5,7 @@ django-filter
 django-rest-auth
 djangorestframework
 drf_redesign
+drf_material
 httpie
 Markdown
 pytest
