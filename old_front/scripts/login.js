@@ -9,7 +9,7 @@ const APP = Vue.createApp({
     methods: {
         async handleLogin() {
             try {
-                const RESPONSE = await fetch("../consumables/users.json");
+                const RESPONSE = await fetch("/old_front/consumables/users.json");
                 const USERS = await RESPONSE.json();
 
                 const USER = USERS.users.find(

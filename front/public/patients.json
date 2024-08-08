@@ -3,13 +3,13 @@
         {
             "id": 1,
             "name":"Fulano D. Tal",
-            "email":"fulanoTal@gmail.com",
+            "email":"fulanoTal@fakemail.com",
             "phone":"21 9999-9999"
         },
         {
             "id": 2,
             "name":"Ciclano D. Tal",
-            "email":"ciclano4244@hotmail.com",
+            "email":"ciclano4244@fakemail.com",
             "phone":"21 9999-9998"
         }
     ]

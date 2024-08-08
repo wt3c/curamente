@@ -151,4 +151,3 @@ export const SESSION_LIST = {
     </details>  
     `
 }
-

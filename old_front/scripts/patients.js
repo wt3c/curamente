@@ -3,7 +3,7 @@ import HEADER from "../components/common.js"
 const APP = Vue.createApp({
     data() {
         return {
-            therapist: "Alexandre Velozo",
+            therapist: "Zé Fulano",
             patients: []
         };
     },

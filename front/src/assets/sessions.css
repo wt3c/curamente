@@ -1,0 +1,307 @@
+/* MOBILE FIRST APPLICATION
+--------------------------------
+   GENERAL SESSION COMPONENTS
+-------------------------------- */
+.sessionContainer {
+    background-color: white;
+    width: 98%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid gray;
+    border-radius: 16px;
+}
+
+.session__title {
+    margin: 16px 6px;
+    font-weight: 600;
+    font-size: 1.7rem;
+}
+
+.newSession__input {
+    height: 45px;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 1.1rem;
+    border: 1.5px solid black;
+}
+
+.sessions__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width:100%;
+}
+
+/*---------------------------
+    NEW SESSION COMPONENT
+-----------------------------*/
+.newSession__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.newSession__form__row-1 {
+    width: 100%;
+    font-size: 1rem;
+    margin: 20px 0px;
+    padding: 4px;
+
+    display: flex;
+    gap: 10%;
+}
+
+.row-1__period {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.row-1__fieldname {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.input--discomfort{
+    width: 54px;
+}
+
+.discomforts__label{
+    margin: 0px 6px 0px 8px
+}
+
+.newSession__form__row-2 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0px 0px 20px 0px;
+}
+
+.newSession__form__row-2 > .checkbox__wrapper {
+    margin-left: 12%;
+}
+
+.btn.btn--openNotes {
+    width: 50%;
+}
+
+.newSession__notes {
+    width: 100%;
+    display: none;
+}
+
+.newSession__notes.active {
+    display: block;
+}
+
+.notes__textarea {
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 1rem;
+    resize: vertical;
+    width: 100%;
+    margin: 0px 12px 20px 0px;
+}
+
+.newSession__form > .btn--submit {
+    margin: 20px 0px 15px 0px;
+    width: 50%;
+    align-self: flex-end;
+}
+
+/*--------------------------------
+    PATIENT SESSIONS COMPONENT    
+----------------------------------*/
+.sessionContainer--patient {
+    gap: 16px;
+}
+
+.session__title.title--toggle{
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0px 0px 16px 0px;
+    padding: 0px 10px;
+    
+    -webkit-touch-callout: none; /* iPhone OS, Safari */
+    -webkit-user-select: none; /* Chrome, Safari 3 */
+    -khtml-user-select: none; /* Safari 2 */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Padrão */
+}
+
+.session__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.session__list__wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.item__header {
+    background-color: #dedede;
+    height: 60px;
+    border-top: 1.5px solid black;
+    border-bottom: 1.5px solid black;
+    border-radius: 10px;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.visual-line {
+    border-left: 1px solid black;
+    height: 100%;
+    width: 1px;
+    opacity: 75%;
+}
+
+.session__item {
+    background-color: #cecece;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border-left: 1.5px solid black;
+    border-right: 1.5px solid black;
+}
+
+.session__notes {
+    background-color: #cecece;
+    height: 300px;
+    padding: 12px;
+    border-radius: 0px 0px 10px 10px;
+    border-bottom: 1.5px solid black;
+    display: none;
+}
+
+.session__notes.active {
+    display: flex;
+}
+
+/*--------------------------------
+   SESSION ITEM COLOR MODIFYERS
+----------------------------------*/
+.item__header.item--green {
+    background-color: #b9f0b9;
+}
+
+.session__notes.item--green,
+.session__item.item--green {
+    background-color: #94df94;
+}
+
+.item__header.item--yellow {
+    background-color: #f0eab9;
+}
+
+.session__notes.item--yellow,
+.session__item.item--yellow {
+    background-color: #e2da96;
+}
+
+.item__header.item--red {
+    background-color: #f0bab1;
+}
+
+.session__notes.item--red,
+.session__item.item--red {
+    background-color: #dba096;
+}
+
+/* ------------------------------ 
+    SMALL WIDTH MOBILE PHONES
+---------------------------------*/
+@media (max-width: 422px) {
+    .newSession__form__row-1 {
+        margin: 20px 0px;
+        padding: 0px;
+        gap: 3%;
+        justify-content: space-between;
+    }
+
+    .discomforts__label {
+        margin: 0px 5px;
+    }
+
+    .newSession__form__row-2 > .checkbox__wrapper {
+        margin-left: 12px;
+    }
+
+    .btn.btn--openNotes {
+        width: 60%;
+        font-size: 1.1rem;
+    }
+
+    .newSession__notes {
+        padding: 0px;
+    }
+
+    .newSession__form > .btn--submit {
+        width: 60%;
+    }
+}
+
+/*-----------------
+      TABLETS 
+-------------------*/
+@media screen and (min-width: 650px) and (max-width: 992px){
+    .newSession__form__row-1{
+        padding: 0px;
+        width: 100%;
+    }
+    .row-1__period {
+        width: 50%;
+    }
+    .input--discomfort{
+        width: 24%;
+    }
+    .newSession__form__row-2 {
+        justify-content: start;
+        width: 100%;
+    }
+}
+
+/* -------------------------
+    LAPTOPS AND COMPUTERS
+----------------------------*/
+@media screen and (min-width: 992px) {
+    .sessions__wrapper{
+        display: flex;
+        width: 95%;
+        align-items: baseline;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+    .sessionContainer{
+        width: 50%;
+    }
+    .sessionContainer--patient {
+        min-height: 80vh;
+    }
+    .newSession__form__row-1{
+        gap: 50px;
+        padding: 0px;
+        width: 100%;
+    }
+    .newSession__form__row-2 {
+        justify-content: start;
+        width: 100%;
+    }
+    .row-1__period {
+        width: 50%;
+    }
+    .input--discomfort{
+        width: 24%;
+    }
+
+}
