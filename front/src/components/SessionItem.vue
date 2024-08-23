@@ -4,7 +4,7 @@
 
         <div class="item__header" v-on:click="toggleNotes" v-on:setup="changeColor(df, dc)"
         v-bind:class="{'item--green': color == 'G','item--red': color == 'R', 'item--yellow': color == 'Y'}">
-            <p>{{ data }}</p>
+            <p>{{ date }}</p>
             <span class="visual-line"></span>
             <p>{{ main }}</p>
             <span class="visual-line"></span>
@@ -24,7 +24,7 @@
 export default {
     name: "SessionItem",
     props: {
-        data: String,
+        date: String,
         main: String,
         df: Number,
         dc: Number,

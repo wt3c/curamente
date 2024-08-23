@@ -3,11 +3,11 @@
         <section class="container window mt-2">
             <h1 class="mb-1">Login</h1>
             <hr>
-            <form @submit.prevent="handleLogin" class="form d-flex flex-collumn mt-1 font--medium">
-                <label for="email_field">Email</label>
-                <input type="email" v-model="email" id="email_field" class="mb-1">
+            <form @submit.prevent="login" class="form d-flex flex-collumn mt-1 font--medium">
+                <label for="email_field">Usuário</label>
+                <input type="text" v-model="username" id="email_field" class="mb-1">
 
-                <label for="password_field">Password</label>
+                <label for="password_field">Senha</label>
                 <input type="password" v-model="password" id="password_field">
 
                 <button type="submit" class="btn btn--submit btn--small mt-2">Login</button>
@@ -19,34 +19,43 @@
 </template>
 
 <script>
-    export default {
-        data () {
-        return {
-            email: '',
+import { HttpRequest, HttpError, httpErrorHandler } from '@/services/HttpRequest';
+import { useAuthStore } from '@/stores/auth';
+
+export default {
+    data () {
+    return {
+            username: '',
             password: '',
             authenticated: ''
         };
     },
     methods: {
-        async handleLogin() {
-            try {
-                const RESPONSE = await fetch("/users.json");
-                const USERS = await RESPONSE.json();
-
-                const USER = USERS.users.find(
-                    (u) => u.email === this.email && u.password == this.password
-                );
-
-                if (USER) {
-                    this.authenticated = 'Você está autenticado!';
-                    //Redirecionar para a próxima página <- fazer nas views do Django?
-                } else {
-                    alert("Credenciais inválidas. Tente novamente.");
-                }
-            } catch (error) {
-                console.error("Erro ao carregar dados de login:", error);
+        async login() {
+            let body = {
+                username: this.username,
+                password: this.password
             }
-        },
-    }, 
+            
+            try {
+                let response = await new HttpRequest().post("http://localhost:8000/login/", body);
+                if(response){
+                    this.authenticated = 'Você está autenticado!';
+                    const authStore = useAuthStore();
+                    authStore.userId = response.id;
+					authStore.firstname = response.user.first_name;
+                    setTimeout( () => { this.$router.push('/') }, 1000);
+                }
+
+            } catch(error) {
+                if (error instanceof HttpError && error.status == 401) {
+                    this.authenticated = "Credenciais inválidas. Tente novamente";
+                } else {
+                    console.error(httpErrorHandler(error));
+                }  
+            };
+        }
+    },
 };
+
 </script>

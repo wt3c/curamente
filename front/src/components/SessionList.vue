@@ -16,6 +16,7 @@
 
 <script>
 import SessionItem from "@/components/SessionItem.vue";
+import { HttpRequest, httpErrorHandler } from "@/services/HttpRequest";
 
 export default {
     name: "SessionList",
@@ -35,15 +36,14 @@ export default {
     methods: {
         async getSessions() {
             try {
-                const RESPONSE = await fetch(this.path);
-                const DATA = await RESPONSE.json();
-                this.items = DATA.items;
+                let data = await new HttpRequest().get(this.path);
+                this.items = data.items;
 
-            } catch (error) {
-                console.error("Erro ao carregar os dados das sessões:", error);
+            } catch(error) {
+                console.error(httpErrorHandler(error));
             }
         },
-    }
+    },
 }
 </script>
 

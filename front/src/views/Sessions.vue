@@ -24,14 +24,30 @@ import NewSession from "@/components/NewSession.vue";
 import SessionList from "@/components/SessionList.vue";
 
 export default {
+    computed: {
+        $store() {
+            return useProfileStore();
+        },
+    },
     data(){
         return {
-            patient: "Fulano D. Tal"
+            patient: "Nome do Paciente",
+            id: null,
+            sessions: []
+            
         };
     }, 
     components: {
         NewSession,
         SessionList
+    },
+    methods: {
+        loadStore() {
+            let patient = this.$store.profile;
+            this.id = patient.id
+            this.patient = `${patient.user.first_name} ${patient.user.last_name}`;
+            this.sessions = patient.sessao
+        },
     }
 }
 </script>

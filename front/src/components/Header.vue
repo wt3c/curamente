@@ -7,9 +7,9 @@
             <div class="menu__overlay" v-if="menu_active" v-on:click="closeMenu"></div>
             <div class="header__menu__items" :class="{active:menu_active}">
                 <ul>
-                    <li><RouterLink to="/">Home</RouterLink></li>
-                    <li><RouterLink to="/login">Perfil</RouterLink></li>
-                    <li><RouterLink to="/patients">Pacientes</RouterLink></li>
+                    <li><RouterLink to="/" v-on:click="closeMenu">Home</RouterLink></li>
+                    <li><RouterLink to="/login" v-on:click="closeMenu">Perfil</RouterLink></li>
+                    <li><RouterLink to="/patients" v-on:click="closeMenu">Pacientes</RouterLink></li>
                     <li><RouterLink to="/login">Logout</RouterLink></li>
                 </ul>
             </div>
