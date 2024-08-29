@@ -4,6 +4,7 @@ django_extensions
 django-filter
 django-rest-auth
 djangorestframework
+django-cors-headers
 drf_redesign
 httpie
 Markdown
