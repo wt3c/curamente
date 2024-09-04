@@ -8,7 +8,13 @@ django_extensions
 djangorestframework
 drf_material
 drf_redesign
+drf_material
 httpie
+
+
+Markdown
+Pillow
+
 pytest
 pytest-cov
 pytest-django
