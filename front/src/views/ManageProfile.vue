@@ -47,7 +47,7 @@
 <script>
 import { useProfileStore } from '@/stores/profile';
 import { HttpRequest, httpErrorHandler } from '@/services/HttpRequest';
-import { normalizeDate } from '@/services/Normalize';
+import { Normalizer } from '@/services/Normalizer';
 
 export default {
     name: 'PatientProfile',
@@ -69,6 +69,9 @@ export default {
         };
     },
     methods: {
+        normalizeDate(info){
+            return new Normalizer().normalizeDate(info);
+        },
         async submitProfile(){
             let body = this.setProfile();
             try {

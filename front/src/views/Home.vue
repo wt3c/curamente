@@ -22,9 +22,9 @@
 </template>
   
 <script>
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth';
 import { HttpRequest, httpErrorHandler} from '@/services/HttpRequest';
-import { normalizeDate } from '@/services/Normalize'
+import { Normalizer } from '@/services/Normalizer';
 
 export default {
 	name: 'Home',
@@ -42,6 +42,9 @@ export default {
 		};
 	}, 
 	methods: {
+		normalizeDate(info){
+			return new Normalizer().normalizeDate(info);
+		},
 		async getData() {
 			try {
 				let data = await new HttpRequest().useCsrfToken().get(`http://localhost:8000/core/usuario/${this.user}/`);

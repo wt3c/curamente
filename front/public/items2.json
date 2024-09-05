@@ -1,10 +1,10 @@
 {
   "items": [
-      { "id": 1, "data": "20/04/2024", "period":"Aranhas", "df": 0, "dc": 0, 
+      { "id": 1, "date": "20/04/2024", "period":"Aranhas", "df": 0, "dc": 0, 
       "text":"O paciente esteve tranquilo"},
-      { "id": 2, "data": "21/04/2024", "period":"Palhaços", "df": 6, "dc": 5,
+      { "id": 2, "date": "21/04/2024", "period":"Palhaços", "df": 6, "dc": 5,
       "text":"O paciente demonstrou estresse moderado"},
-      { "id": 3, "data": "22/04/2024", "period":"Claustrofobia", "df": 10, "dc": 10, 
+      { "id": 3, "date": "22/04/2024", "period":"Claustrofobia", "df": 10, "dc": 10, 
       "text":"O paciente revelou profunda ansiedade sobre o tema"}
 ]
 
