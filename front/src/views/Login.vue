@@ -44,7 +44,7 @@ export default {
                     const authStore = useAuthStore();
                     authStore.userId = response.id;
 					authStore.firstname = response.user.first_name;
-                    setTimeout( () => { this.$router.push('/') }, 1000);
+                    this.$router.push('/')
                 }
 
             } catch(error) {
