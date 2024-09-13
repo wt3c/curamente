@@ -47,11 +47,19 @@ class UsuarioDetail(APIView):
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
+    def post(self, request, pk, format=None):
         serializer = ProfileSerializer(data=request.data)
+        therapist = Profile.objects.get(pk=pk)
+        # After authentication feature, compare id with authenticated user to validate patient creation.
+
+        if(therapist.tipo.lower() != "terapeuta"):
+            content = {'message' : 'id inválido'}
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
         if serializer.is_valid():
-            serializer.save()
+            new_patient = serializer.save(pacientes=[])
+            therapist.pacientes.add(new_patient)
+            therapist.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

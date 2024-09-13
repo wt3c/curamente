@@ -12,7 +12,7 @@
 
                 <button type="submit" class="btn btn--submit btn--small mt-2">Login</button>
 
-                <h2 class="mt-1">{{ authenticated }}</h2>
+                <h2 class="mt-1">{{ message }}</h2>
             </form>
         </section>
     </div>
@@ -20,14 +20,13 @@
 
 <script>
 import { HttpRequest, HttpError, httpErrorHandler } from '@/services/HttpRequest';
-import { useAuthStore } from '@/stores/auth';
 
 export default {
     data () {
     return {
             username: '',
             password: '',
-            authenticated: ''
+            message: ''
         };
     },
     methods: {
@@ -38,18 +37,25 @@ export default {
             }
             
             try {
+                this.message = 'Autenticando...';
                 let response = await new HttpRequest().post("http://localhost:8000/login/", body);
                 if(response){
-                    this.authenticated = 'Você está autenticado!';
-                    const authStore = useAuthStore();
-                    authStore.userId = response.id;
-					authStore.firstname = response.user.first_name;
-                    setTimeout( () => { this.$router.push('/') }, 1000);
+                    // JUST FOR AUTHENTICATED FEATURES TESTS, IN PRODUCTION IT HAVE TO BE DIFFERENT!
+                    const user_model = {
+                        id: response.id,
+                        username: response.user.username,
+                        first_name: response.user.first_name,
+                        last_name: response.user.last_name,
+                        email: response.contatos.email,
+                        phone: response.contatos.telefone
+                    };
+                    sessionStorage.setItem('therapist_user', JSON.stringify(user_model));
+                    this.$router.push('/');
                 }
 
             } catch(error) {
                 if (error instanceof HttpError && error.status == 401) {
-                    this.authenticated = "Credenciais inválidas. Tente novamente";
+                    this.message = "Credenciais inválidas. Tente novamente";
                 } else {
                     console.error(httpErrorHandler(error));
                 }  
