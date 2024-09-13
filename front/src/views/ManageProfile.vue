@@ -66,23 +66,46 @@ export default {
             phone: "",
             sessions: [],
             id: null,
+            userId: null
         };
+    },
+    beforeMount(){
+        // USER AUTHENTICATED TEMPLATE BEFORE THE FEATURE, DO NOT DEPLOY!!!
+        const user = JSON.parse(sessionStorage.getItem('therapist_user'));
+        if (user) {
+            this.userId = user.id;
+        } else {
+            alert("Aviso de desenvolvimento: Não há usuário em sessão, redirecionando ao login");
+            this.$router.push('/login');
+        }
+    },
+    mounted() {
+        try {
+            this.loadStore();
+        } catch(error){
+            console.log("Sem dados persistidos.");
+        }
+    },
+    beforeUnmount(){
+        const profileStore = useProfileStore();
+		profileStore.resetStore();
     },
     methods: {
         normalizeDate(info){
             return new Normalizer().normalizeDate(info);
         },
+
         async submitProfile(){
             let body = this.setProfile();
             try {
-                let request = new HttpRequest().useCsrfToken();
+                let request = new HttpRequest();
 
                 if(this.id){
                     request = await request.put(`http://localhost:8000/core/usuario/${this.id}/`, body);
                     alert("Informações salvas, perfil editado com sucesso.");
                 } else {
-                    request = await request.post(`http://localhost:8000/core/usuario/${this.id}/`);
-                    alert(`Novo perfil de ${body.first_name} ${body.lastname} criado com sucesso!`);
+                    request = await request.post(`http://localhost:8000/core/usuario/${this.userId}/`, body);
+                    alert(`Novo perfil de ${body.user.first_name} ${body.user.last_name} criado com sucesso!`);
                 }
 
             } catch(error) {
@@ -91,15 +114,13 @@ export default {
         },
 
         async deleteProfile() {
-            let warn = confirm(`Tem certeza que quer deletar ${this.firstname} ${this.lastname}?`)
-            if(warn){
+            let confirmation = confirm(`Tem certeza que quer deletar ${this.firstname} ${this.lastname}?`)
+            if(confirmation){
                 try {
-                    const request = new HttpRequest().useCsrfToken();
-                    let response = await request.delete(`http://localhost:8000/core/usuario/${this.id}/`);
-                    if(response) {
-                        alert("Operação concluída.");
-                        this.$router.push('/patients');
-                    }
+                    await new HttpRequest().delete(`http://localhost:8000/core/usuario/${this.id}/`);
+                    alert("Operação concluída.");
+                    this.$router.push('/patients');
+
                 } catch(error) {
                     console.error(httpErrorHandler(error));
                 }
@@ -138,23 +159,15 @@ export default {
             if(this.id == null){
                 body.user = {
                     username: this.email,
-                    password: "Qwerty123@",
                     first_name: this.firstname,
                     last_name: this.lastname
                 };
-
-                body.tipo = this.userType;
+                body.sessao = [];
+                body.tipo = "paciente";
             };
 
             return body;
         },
     },
-    mounted() {
-        try {
-            this.loadStore();
-        } catch(error){
-            console.log("Sem dados persistidos.");
-        }
-    }
 };
 </script>
