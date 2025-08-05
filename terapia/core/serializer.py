@@ -34,6 +34,20 @@ class SessoaSerializer(serializers.ModelSerializer):
         ]
         depth = 1
 
+        def create(self):
+            return Sessao(**self.validated_data)
+        
+        def update(self, instance, validated_data):
+            instance.tipo = validated_data.get("tipo")
+            instance.horario = validated_data.get("horario")
+            instance.perido = validated_data.get("perido")
+            instance.desconforto_fisico = validated_data.get("desconforto_fisico")
+            instance.desconforto_mental = validated_data.get("desconforto_mental")
+            instance.superado = validated_data.get("superado")
+            instance.notas = validated_data.get("notas")
+
+            instance.save()
+            return instance
 
 class PacienteSerializer(serializers.Serializer):
     user = UserSerializer(read_only=True)

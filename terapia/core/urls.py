@@ -5,5 +5,6 @@ urlpatterns = [
     # Profile
     path("usuario/", views.UsuarioView.as_view(), name="terapeuta"),
     path("usuario/<str:pk>/", views.UsuarioDetail.as_view(), name="paciente"),
+    path("sessao/<str:pk>/", views.SessaoView.as_view(), name="sessoes"),
 
 ]

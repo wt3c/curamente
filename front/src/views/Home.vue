@@ -3,7 +3,7 @@
 	  <h1>Bem vindo {{ therapist }}!</h1>
 	  <p>{{ description }}</p>
 
-	  <section class="content" v-if="user">
+	  <section class="content" v-if="userId">
 		<ul class="mb-1">
 		  <li v-for="patient in patients">
 			<h3>{{ patient.user.first_name }} {{ patient.user.last_name }}</h3>
@@ -16,54 +16,56 @@
 		  </li>
 		</ul>
 		<hr class="mb-1">
-		<button class="content">Novo Paciente</button>
+		<button class="content" v-on:click="this.$router.push('/manage');">Novo Paciente</button>
 	  </section>
 	</main>
 </template>
   
 <script>
-import { useAuthStore } from '@/stores/auth'
 import { HttpRequest, httpErrorHandler} from '@/services/HttpRequest';
-import { normalizeDate } from '@/services/Normalize'
+import { Normalizer } from '@/services/Normalizer';
 
 export default {
 	name: 'Home',
-	computed: {
-		$store() {
-	  		return useAuthStore();
-		},
-  	},
 	data() {
 		return {
-			user: null,
+			userId: null,
 			therapist: "Terapeuta",
 			description: "Não há novas sessões no momento.",
 			patients: [],
 		};
-	}, 
+	},
+	beforeMount() {
+		try {
+			// USER AUTHENTICATED TEMPLATE BEFORE THE FEATURE, DO NOT DEPLOY!!!
+			const user = JSON.parse(sessionStorage.getItem('therapist_user'));
+			this.therapist = user.first_name;
+			this.userId = user.id;
+
+		} catch(error){
+			console.log("Sem dados de usuário.");
+		}
+
+		if (this.userId){
+			this.getData();
+		}
+	},
 	methods: {
+		normalizeDate(info){
+			return new Normalizer().normalizeDate(info);
+		},
 		async getData() {
 			try {
-				let data = await new HttpRequest().useCsrfToken().get(`http://localhost:8000/core/usuario/${this.user}/`);
+				let data = await new HttpRequest().get(`http://localhost:8000/core/usuario/${this.userId}/`);
 				this.patients = data.pacientes;
-				this.description = "Aqui estão as sessões correntes:"
+				if(this.patients.length > 0){
+					this.description = "Aqui estão as sessões correntes:"
+				} 
 
 			} catch(error) {
 				console.error(httpErrorHandler(error));
 			}
 		},
-	},
-	beforeMount() {
-		try {
-			this.therapist = this.$store.firstname;
-			this.user = this.$store.userId;
-		} catch(error){
-			console.log("Sem dados persistidos.");
-		}
-
-		if (this.user) {
-			this.getData();
-		}
 	},
 }
 </script>
