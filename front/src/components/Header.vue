@@ -10,7 +10,7 @@
                     <li><RouterLink to="/" v-on:click="closeMenu">Home</RouterLink></li>
                     <li><RouterLink to="/login" v-on:click="closeMenu">Perfil</RouterLink></li>
                     <li><RouterLink to="/patients" v-on:click="closeMenu">Pacientes</RouterLink></li>
-                    <li><RouterLink to="/login">Logout</RouterLink></li>
+                    <li><RouterLink to="/login" v-on:click="logout">Logout</RouterLink></li>
                 </ul>
             </div>
         </nav>
@@ -29,8 +29,16 @@
             openMenu() {
                 this.menu_active = true;
             },
+
             closeMenu() {
                 this.menu_active = false;
+            },
+
+            logout(){
+                // AUTHENTICATED TEMPLATE BEFORE THE FEATURE, DO NOT DEPLOY!
+                if(sessionStorage.getItem('therapist_user')){
+                    sessionStorage.removeItem('therapist_user');
+                }
             }
         }
     }

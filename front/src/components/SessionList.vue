@@ -4,7 +4,7 @@
                 <ul class="session__list">
                     <li v-for="item in items" :key="item.id">
                     <SessionItem 
-                    :data="item.data"
+                    :date="item.date"
                     :main="item.period"
                     :df="item.df"
                     :dc="item.dc"
