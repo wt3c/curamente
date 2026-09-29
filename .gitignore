@@ -277,3 +277,6 @@ npm-debug.log
 yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,vuejs
+
+# ai-memory (marker local de captura)
+.ai-memory.toml
